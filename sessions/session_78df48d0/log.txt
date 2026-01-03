@@ -1,0 +1,4 @@
+NEW SESSION 78df48d0
+task_type = LLM
+subtask = LLM/summarization
+user_task = Отличие кошек от собак

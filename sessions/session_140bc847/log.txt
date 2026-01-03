@@ -1,0 +1,12 @@
+NEW SESSION 140bc847
+task_type = LLM
+task_type = CV
+task_type = Audio
+task_type = Tabular
+task_type = LLM
+subtask = LLM/summarization
+subtask = LLM/code
+subtask = LLM/chat
+subtask = LLM/translation
+subtask = LLM/chat
+user_task = ываываыва

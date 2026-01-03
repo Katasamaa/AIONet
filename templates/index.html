@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>AIONet – Decision Interface</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+<h2>AIONet – Decision Engine</h2>
+
+<button id="start-session">Начать новую сессию</button>
+<p id="session-info"></p>
+
+<hr>
+
+<h3>1. Выбор типа задачи</h3>
+<div id="task-type-buttons">
+    <button onclick="selectTaskType('LLM')">LLM</button>
+    <button onclick="selectTaskType('CV')">CV</button>
+    <button onclick="selectTaskType('Audio')">Audio</button>
+    <button onclick="selectTaskType('Tabular')">Tabular</button>
+
+    <input id="manual-type" placeholder="Ввести вручную">
+    <button onclick="manualType()">OK</button>
+</div>
+
+<div id="subtasks-block"></div>
+
+<div id="datasets-block"></div>
+
+<hr>
+
+<h3>2. Описание кастомной задачи</h3>
+<textarea id="custom-task" placeholder="Опишите задачу..."></textarea>
+<button onclick="submitCustomTask()">Отправить</button>
+
+<pre id="result"></pre>
+
+<script src="/static/script.js"></script>
+</body>
+</html>

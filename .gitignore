@@ -1,17 +1,29 @@
-# Игнорируем кэш Python
+# Секретные данные
+.env
+
+# Python
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
 
-# Игнорируем виртуальное окружение
+# Виртуальное окружение
+venv/
 .venv/
+env/
 
-# Игнорируем папку tr
-tr/
-
-# Игнорируем run.sh
-run.sh
-
-# Также можно добавить другие стандартные игноры
+# Сессии
+sessions/
 *.log
-*.tmp
+
+# IDE
+.vscode/
+.idea/
 *.swp
+*.swo
+
+# OS
 .DS_Store
+Thumbs.db

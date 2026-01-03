@@ -1,0 +1,117 @@
+openapi: 3.0.3
+info:
+  title: AIONet Decision Engine API
+  description: |
+    API для системы фильтрации задач, подзадач и датасетов в проекте AIONet.
+    Используется для прототипа GUI с деревом решений и сохранением сессий.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5000
+    description: Local development server
+
+paths:
+
+  /start_session:
+    post:
+      summary: Создать новую сессию взаимодействия
+      description: |
+        Создаёт уникальную директорию в /sessions и начинает новую сессию пользователя.
+      responses:
+        '200':
+          description: Успешное создание сессии
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_id:
+                    type: string
+                    example: "f39a12b4"
+
+  /select_task_type:
+    post:
+      summary: Выбор основного типа задачи (LLM, CV, Audio, Tabular)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                task_type:
+                  type: string
+                  example: "LLM"
+      responses:
+        '200':
+          description: Список подзадач
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subtasks:
+                    type: array
+                    items:
+                      type: string
+                    example: ["code", "chat", "translation", "summarization"]
+        '400':
+          description: Ошибка — неизвестный тип задачи
+
+  /select_subtask:
+    post:
+      summary: Выбор подзадачи для данного типа задачи
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                task_type:
+                  type: string
+                  example: "LLM"
+                subtask:
+                  type: string
+                  example: "code"
+      responses:
+        '200':
+          description: Список доступных датасетов
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  datasets:
+                    type: array
+                    items:
+                      type: string
+                    example: ["TheStack", "CodeParrot", "BigCodeBench"]
+        '400':
+          description: Ошибка — неизвестная подзадача
+
+  /submit_custom_task:
+    post:
+      summary: Отправить описание собственной задачи пользователя
+      description: Сейчас возвращает заглушку, в будущем — LLM-анализ.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                task:
+                  type: string
+                  example: "Нужно классифицировать дефекты металла по фото"
+      responses:
+        '200':
+          description: Заглушка ответа
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Заглушка: LLM-фильтрация находится в разработке."

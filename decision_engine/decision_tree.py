@@ -19,12 +19,24 @@ class DecisionTree:
                             "SVC",
                             "KNeighborsClassifier"
                         ],
-                        "datasets": [
-                            "load_iris",           # Классификация цветов
-                            "load_wine",           # Классификация вин
-                            "load_breast_cancer",  # Медицинская диагностика
-                            "load_digits"          # Распознавание цифр
-                        ],
+                        "datasets": {
+                            "sklearn": [
+                                "load_iris",           # Классификация цветов
+                                "load_wine",           # Классификация вин
+                                "load_breast_cancer",  # Медицинская диагностика
+                                "load_digits"          # Распознавание цифр
+                            ],
+                            "huggingface": [
+                                "imdb",                # Анализ тональности отзывов
+                                "ag_news",             # Классификация новостей
+                                "yelp_review_full"     # Отзывы ресторанов
+                            ],
+                            "kaggle": [
+                                "titanic",             # Выживаемость на Титанике
+                                "mushroom-classification",  # Классификация грибов
+                                "spam-classification"  # Классификация спама
+                            ]
+                        },
                         "description": "Предсказание категориальной переменной (класса)"
                     },
                     "regression": {
@@ -35,10 +47,19 @@ class DecisionTree:
                             "RandomForestRegressor",
                             "GradientBoostingRegressor"
                         ],
-                        "datasets": [
-                            "load_diabetes",       # Прогресс диабета
-                            "california_housing"   # Цены на недвижимость
-                        ],
+                        "datasets": {
+                            "sklearn": [
+                                "load_diabetes",       # Прогресс диабета
+                                "california_housing"   # Цены на недвижимость
+                            ],
+                            "huggingface": [
+                                "house_prices"         # Цены на дома
+                            ],
+                            "kaggle": [
+                                "house-prices-advanced-regression-techniques",
+                                "bike-sharing-demand"
+                            ]
+                        },
                         "description": "Предсказание числовой переменной"
                     }
                 }
@@ -78,10 +99,15 @@ class DecisionTree:
             return None
         return list(task["subtasks"].keys())
 
-    def get_datasets(self, task_type, subtask):
+    def get_datasets(self, task_type, subtask, source="all"):
         """
         Возвращает список датасетов
-        Совместимость со старым API
+        Совместимость со старым API + новая функциональность
+        
+        Args:
+            task_type: Тип задачи (Tabular, CV, etc.)
+            subtask: Подзадача (classification, regression)
+            source: Источник ("all", "sklearn", "huggingface", "kaggle")
         """
         task = self.rules.get(task_type)
         if not task:
@@ -89,9 +115,24 @@ class DecisionTree:
         
         subtask_data = task["subtasks"].get(subtask)
         
-        # Для новой структуры Tabular
-        if isinstance(subtask_data, dict):
-            return subtask_data.get("datasets", [])
+        # Для новой структуры Tabular (с несколькими источниками)
+        if isinstance(subtask_data, dict) and "datasets" in subtask_data:
+            datasets = subtask_data["datasets"]
+            
+            # Если datasets - это словарь источников
+            if isinstance(datasets, dict):
+                if source == "all":
+                    # Объединить все источники
+                    all_datasets = []
+                    for src_datasets in datasets.values():
+                        all_datasets.extend(src_datasets)
+                    return all_datasets
+                else:
+                    # Вернуть конкретный источник
+                    return datasets.get(source, [])
+            else:
+                # Старый формат - просто список
+                return datasets
         
         # Для старой структуры (LLM, CV, Audio)
         return subtask_data

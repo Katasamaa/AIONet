@@ -1,4 +1,5 @@
-from .huggingface import HuggingFaceIntegration
-from .kaggle import KaggleIntegration
+# integrations/__init__.py
 
-__all__ = ['HuggingFaceIntegration', 'KaggleIntegration']
+from .kaggle_api import KaggleIntegration
+
+__all__ = ['KaggleIntegration']

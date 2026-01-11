@@ -1,8 +1,14 @@
+# integrations/kaggle_api.py
+
 import os
 import json
+from pathlib import Path
+from dotenv import load_dotenv
 from kaggle.api.kaggle_api_extended import KaggleApi
 import pandas as pd
-from pathlib import Path
+
+# Загрузить переменные из .env
+load_dotenv()
 
 class KaggleIntegration:
     """

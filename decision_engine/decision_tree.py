@@ -26,15 +26,10 @@ class DecisionTree:
                                 "load_breast_cancer",  # Медицинская диагностика
                                 "load_digits"          # Распознавание цифр
                             ],
-                            "huggingface": [
-                                "imdb",                # Анализ тональности отзывов
-                                "ag_news",             # Классификация новостей
-                                "yelp_review_full"     # Отзывы ресторанов
-                            ],
                             "kaggle": [
-                                "titanic",             # Выживаемость на Титанике
-                                "mushroom-classification",  # Классификация грибов
-                                "spam-classification"  # Классификация спама
+                                "alexisbcook/titanic",                    # Выживаемость на Титанике
+                                "uciml/mushroom-classification",          # Классификация грибов
+                                "uciml/sms-spam-collection-dataset"       # Классификация спама
                             ]
                         },
                         "description": "Предсказание категориальной переменной (класса)"
@@ -52,12 +47,9 @@ class DecisionTree:
                                 "load_diabetes",       # Прогресс диабета
                                 "california_housing"   # Цены на недвижимость
                             ],
-                            "huggingface": [
-                                "house_prices"         # Цены на дома
-                            ],
                             "kaggle": [
-                                "house-prices-advanced-regression-techniques",
-                                "bike-sharing-demand"
+                                "c/house-prices-advanced-regression-techniques",
+                                "c/bike-sharing-demand"
                             ]
                         },
                         "description": "Предсказание числовой переменной"
